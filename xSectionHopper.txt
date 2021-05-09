@@ -1,0 +1,22 @@
+$prev_module_base = mod.base(cip)
+$prev_module_size = mod.size(cip)
+$prev_module_end = $prev_module_base + $prev_module_size
+$prev_cip = cip
+
+loop:
+$module_base = mod.base(cip)
+$module_size = mod.size(cip)
+$module_end = $module_base + $module_size
+cmp $module_base, $prev_module_base
+jl new_module
+cmp $module_end, $prev_module_end
+jg new_module
+$prev_module_base = mod.base(cip)
+$prev_module_size = mod.size(cip)
+$prev_module_end = $prev_module_base + $prev_module_size
+$prev_cip = cip
+esti
+jmp loop
+
+new_module:
+log "Prev CIP: {p:prev_cip}, new CIP: {p:cip}, module name: {modname@cip}"
